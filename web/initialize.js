@@ -1,4 +1,5 @@
 var fs = require('fs');
+var archive = require('../helpers/archive-helpers');
 
 // Sync is ok here because this is called just once on startup.
 module.exports = function (basePath) {
@@ -20,4 +21,10 @@ module.exports = function (basePath) {
     // We use fs.mkdirSync to create the folder
     fs.mkdirSync(basePath + "/sites");
   }
+
+  setInterval(function(){
+    archive.downloadUrls(archive.readListOfUrls(function(urls){
+      return urls; 
+    }))
+  },1000);
 };

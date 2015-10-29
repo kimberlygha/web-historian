@@ -12,20 +12,17 @@ exports.headers = headers = {
 
 // method for get requests 
 exports.serveAssets = function(res, asset, callback) {
-  var route = path.join(archive.paths.archivedSites+asset)
-  //if we have the asset page
-  if (archive.isUrlArchived(route)) {
-    res.writeHead(200, {'Content-Type':'text/html'});
-    fs.readFile(route, callback);
-    
-  } else {
-    res.writeHead(404, {'Content-Type':'text/html'});
-    res.write("Page not found");
-    res.end();
-  }
 
-  //readFile the css
-
+  archive.isUrlArchived(asset, function(is) {
+    if (is) {
+      res.writeHead(200, {'Content-Type':'text/html'});
+      fs.readFile(route, callback);
+    } else {
+      res.writeHead(404, {'Content-Type':'text/html'});
+      res.write("Page not found");
+      res.end();
+    }
+  })
   // Write some code here that helps serve up your static files!
   // (Static files are things like html (yours or archived from others...),
   // css, or anything that doesn't change often.)
@@ -33,7 +30,21 @@ exports.serveAssets = function(res, asset, callback) {
 
 
 // method for post requests 
+exports.servePost = function(res, asset, callback){
+  archive.isUrlInList(asset, function(is){
+    if(is){
+      res.writeHead(302,{'Content-Type':'text/html'});
+      fs.readFile(path.join(archive.paths.siteAssets+'loading.html'), callback);
+    }else{
+      archive.addUrlToList(asset, function(){
+        res.writeHead({'Content-Type':'text/html'});
+        fs.readFile(path.join(archive.paths.siteAssets+'loading.html'), callback);
+      })
+    }
+  })
 
+
+}
 
   // Write some code here that helps serve up your static files!
   // (Static files are things like html (yours or archived from others...),
