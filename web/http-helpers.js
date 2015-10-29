@@ -12,8 +12,19 @@ exports.headers = headers = {
 
 // method for get requests 
 exports.serveAssets = function(res, asset, callback) {
-  res.writeHead(200, {'Content-Type':'text/html'});
-  fs.readFile(asset, callback);
+  var route = path.join(archive.paths.archivedSites+asset)
+  //if we have the asset page
+  if (archive.isUrlArchived(route)) {
+    res.writeHead(200, {'Content-Type':'text/html'});
+    fs.readFile(route, callback);
+    
+  } else {
+    res.writeHead(404, {'Content-Type':'text/html'});
+    res.write("Page not found");
+    res.end();
+  }
+
+  //readFile the css
 
   // Write some code here that helps serve up your static files!
   // (Static files are things like html (yours or archived from others...),

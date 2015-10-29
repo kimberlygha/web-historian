@@ -9,12 +9,12 @@ var _ = require('underscore');
  * customize it in any way you wish.
  */
 
-exports.paths = {
+var paths = {
   siteAssets: path.join(__dirname, '../web/public'),
   archivedSites: path.join(__dirname, '../archives/sites'),
   list: path.join(__dirname, '../archives/sites.txt')
 };
-
+exports.paths = paths; 
 // Used for stubbing paths for tests, do not modify
 exports.initialize = function(pathsObj) {
   _.each(pathsObj, function(path, type) {
@@ -38,6 +38,18 @@ exports.addUrlToList = function() {
 // Post -> checks to see the webiste is archived already before acting 
 // htmlfetcher -> test before it deletes a site from the queue 
 exports.isUrlArchived = function(url) {
+  //check inside the archives folder
+  //if its in there,
+    //return true
+
+  if(fs.stat(url, function(err, data){
+
+  })){
+    console.log("I'm a file now ")
+    return true;
+  }else{
+    return false;
+  }
 };
 // htmlfetcher -> gets the site and puts it into the archive 
 exports.downloadUrls = function() {
