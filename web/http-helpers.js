@@ -10,11 +10,19 @@ exports.headers = headers = {
   'Content-Type': "text/html"
 };
 
+// method for get requests 
 exports.serveAssets = function(res, asset, callback) {
+  res.writeHead(200, {'Content-Type':'text/html'});
+  fs.readFile(asset, callback);
+
   // Write some code here that helps serve up your static files!
   // (Static files are things like html (yours or archived from others...),
   // css, or anything that doesn't change often.)
 };
+
+
+// method for post requests 
+
 
   // Write some code here that helps serve up your static files!
   // (Static files are things like html (yours or archived from others...),

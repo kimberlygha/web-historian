@@ -25,17 +25,20 @@ exports.initialize = function(pathsObj) {
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
+
+// htmlfetcher -> know what sites to look for and archive
 exports.readListOfUrls = function() {
 };
-
+// Post -> see if the site is already in the queue
 exports.isUrlInList = function() {
 };
-
+// Post -> if url is not in list, perform this function 
 exports.addUrlToList = function() {
 };
-
-exports.isUrlArchived = function() {
+// Post -> checks to see the webiste is archived already before acting 
+// htmlfetcher -> test before it deletes a site from the queue 
+exports.isUrlArchived = function(url) {
 };
-
+// htmlfetcher -> gets the site and puts it into the archive 
 exports.downloadUrls = function() {
 };
